@@ -3,25 +3,15 @@ package com.naljjig.presentation.navigation
 import kotlinx.serialization.Serializable
 
 sealed interface Routes {
-    val route: String
+    @Serializable
+    data object LoginScreen : Routes
 
     @Serializable
-    data object LoginScreen : Routes {
-        override val route = "log_in"
-    }
+    data object SignUpScreen : Routes
 
     @Serializable
-    data object SignUpScreen : Routes {
-        override val route = "sign_up"
-    }
+    data object WelcomeScreen : Routes
 
     @Serializable
-    data object WelcomeScreen : Routes {
-        override val route = "my_page"
-    }
-
-    @Serializable
-    data object HomeScreen : Routes {
-        override val route = "home"
-    }
+    data object HomeScreen : Routes
 }
