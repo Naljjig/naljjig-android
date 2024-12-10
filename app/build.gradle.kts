@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.naljjig"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.naljjig"
@@ -54,7 +54,7 @@ dependencies {
 
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.compose.navigation)
-    
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
