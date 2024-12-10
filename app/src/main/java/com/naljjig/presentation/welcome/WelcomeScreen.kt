@@ -1,6 +1,7 @@
 package com.naljjig.presentation.welcome
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,6 +33,8 @@ import com.naljjig.core.designsystem.NaljjigTheme
 
 @Composable
 fun WelcomeScreen(
+    navigateToLogin: () -> Unit,
+    navigateToSignUp: () -> Unit,
     modifier: Modifier = Modifier
 ){
     Column(
@@ -75,6 +78,7 @@ fun WelcomeScreen(
                         color = NaljjigTheme.colors.titleText,
                         shape = RoundedCornerShape(10.dp)
                     )
+                    .clickable { navigateToLogin() }
                     .padding(vertical = 15.dp)
             ){
                 Text(
@@ -95,6 +99,7 @@ fun WelcomeScreen(
                         color = NaljjigTheme.colors.secondaryButton,
                         shape = RoundedCornerShape(10.dp)
                     )
+                    .clickable { navigateToSignUp() }
                     .padding(vertical = 15.dp)
             ){
                 Text(
@@ -112,5 +117,10 @@ fun WelcomeScreen(
 @Preview(showBackground = true)
 @Composable
 fun WelcomeScreenPreview(){
-    NaljjigTheme { WelcomeScreen() }
+    NaljjigTheme {
+        WelcomeScreen(
+            {},
+            {}
+        )
+    }
 }

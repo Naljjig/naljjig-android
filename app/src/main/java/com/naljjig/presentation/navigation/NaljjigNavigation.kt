@@ -19,7 +19,8 @@ fun Navigation() {
     ) {
         composable<Routes.WelcomeScreen> {
             WelcomeScreen(
-
+                navigateToSignUp = { navController.navigate(Routes.SignUpScreen) },
+                navigateToLogin = { navController.navigate(Routes.LoginScreen) }
             )
         }
 
