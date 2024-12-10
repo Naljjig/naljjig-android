@@ -1,9 +1,9 @@
-package com.naljjig.presentation.login
+package com.naljjig.presentation.home
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun LoginScreen(){
-    Text("LoginScreen")
+fun HomeScreen(){
+    Text("HomeScreen")
 }
