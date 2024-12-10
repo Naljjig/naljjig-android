@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.naljjig.core.designsystem.NaljjigTheme
-import com.naljjig.presentation.welcome.WelcomeScreen
+import com.naljjig.presentation.navigation.Navigation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             NaljjigTheme {
-                WelcomeScreen()
+                Navigation()
             }
         }
     }
