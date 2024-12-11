@@ -41,9 +41,7 @@ fun AuthTextField(
 
     TextField(
         value = value,
-        onValueChange = { newValue ->
-            onValueChanged(newValue)
-        },
+        onValueChange = onValueChanged,
         modifier = Modifier
             .fillMaxWidth()
             .onFocusChanged { focusState ->

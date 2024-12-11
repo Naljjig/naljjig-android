@@ -56,7 +56,7 @@ fun LoginScreen(
         AuthTextField(
             type = "Email",
             value = email.value,
-            onValueChanged = {newValue -> password.value = newValue},
+            onValueChanged = {newValue -> email.value = newValue},
             isTextFieldFocused = isEmailTextFieldFocused.value,
             onFocusedChange = {focusState -> isEmailTextFieldFocused.value = focusState}
         )
