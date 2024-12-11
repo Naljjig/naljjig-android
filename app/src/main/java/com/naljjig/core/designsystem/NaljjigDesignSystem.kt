@@ -79,7 +79,6 @@ fun NaljjigTheme(
             Box(
                 modifier = Modifier.fillMaxSize()
             ) {
-                // 공통 배경
                 Image(
                     painter = painterResource(id = R.drawable.img_background),
                     contentDescription = null,
