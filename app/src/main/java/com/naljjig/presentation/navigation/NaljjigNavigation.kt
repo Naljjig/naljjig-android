@@ -25,7 +25,10 @@ fun Navigation() {
         }
 
         composable<Routes.LoginScreen> {
-            LoginScreen()
+            LoginScreen(
+                navigateToSignUp = { navController.navigate(Routes.SignUpScreen) },
+                navigateToHome = { navController.navigate(Routes.HomeScreen) }
+            )
         }
 
         composable<Routes.SignUpScreen> {
