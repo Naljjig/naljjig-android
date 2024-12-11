@@ -87,14 +87,16 @@ fun LoginScreen(
 
         AuthButton(
             type = "primary",
-            text = "Login"
+            text = "Login",
+            navigate = navigateToHome
         )
 
         Spacer(modifier = Modifier.height(20.dp))
 
         AuthButton(
             type = "",
-            text = "Create new account"
+            text = "Create new account",
+            navigate = navigateToSignUp
         )
 
         Spacer(modifier = Modifier.height(20.dp))

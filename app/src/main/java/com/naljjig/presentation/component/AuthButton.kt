@@ -1,6 +1,7 @@
 package com.naljjig.presentation.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,11 +18,13 @@ import com.naljjig.core.designsystem.NaljjigTheme
 @Composable
 fun AuthButton(
     type: String,
-    text: String
+    text: String,
+    navigate: () -> Unit
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable { navigate() }
             .background(
                 color = if(type == "primary") NaljjigTheme.colors.primaryButton else NaljjigTheme.colors.secondaryButton,
                 shape = RoundedCornerShape(10.dp)
