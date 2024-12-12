@@ -32,7 +32,9 @@ fun Navigation() {
         }
 
         composable<Routes.SignUpScreen> {
-            SignUpScreen()
+            SignUpScreen(
+                navigateToLogin = { navController.navigate(Routes.LoginScreen) }
+            )
         }
 
         composable<Routes.HomeScreen> {
