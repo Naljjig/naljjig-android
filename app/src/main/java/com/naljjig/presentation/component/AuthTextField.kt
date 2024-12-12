@@ -12,10 +12,13 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.naljjig.core.designsystem.NaljjigTheme
@@ -61,11 +64,25 @@ fun AuthTextField(
         shape = RoundedCornerShape(10.dp),
         placeholder = {
             Text(
-                modifier = Modifier.padding(vertical = 4.dp).padding(start = 4.dp),
                 text = type,
                 fontSize = 16.sp,
                 fontWeight = FontWeight(500)
             )
         }
+    )
+}
+
+@Preview
+@Composable
+fun AuthTextFieldPreview(){
+    val confirmPassword = remember{ mutableStateOf("") }
+    val isConfirmPasswordTextFieldFocused = remember{ mutableStateOf(false) }
+
+    AuthTextField(
+        type = "Confirm Password",
+        value = confirmPassword.value,
+        onValueChanged = {newValue -> confirmPassword.value = newValue} ,
+        isTextFieldFocused = isConfirmPasswordTextFieldFocused.value,
+        onFocusedChange = {focusState -> isConfirmPasswordTextFieldFocused.value = focusState}
     )
 }
