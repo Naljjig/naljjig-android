@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
@@ -39,7 +40,6 @@ import com.naljjig.presentation.home.data.Schedule
 import com.naljjig.presentation.home.data.scheduleList
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 
 @Composable
 fun HomeCalendar(){
@@ -96,8 +96,11 @@ fun HomeCalendar(){
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(7),
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+            userScrollEnabled = false
         ) {
             items(firstDayOfWeek) {
                 Box(modifier = Modifier.padding(vertical = 5.dp))
