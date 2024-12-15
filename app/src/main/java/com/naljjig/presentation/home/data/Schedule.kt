@@ -1,40 +1,41 @@
 package com.naljjig.presentation.home.data
 
 import java.time.LocalDate
-import java.time.LocalTime
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 
 data class Schedule(
     val eventName: String,
     val description: String,
-    val date: LocalDate,
-    val startTime: LocalTime,
-    val endTime: LocalTime,
+    val startDateTime: LocalDateTime,
+    val endDateTime: LocalDateTime,
     val category: String
-)
+){
+    val dateSet = List<LocalDate>(ChronoUnit.DAYS.between(startDateTime, endDateTime).toInt()+1){ index ->
+        startDateTime.plusDays(index.toLong()).toLocalDate()
+    }.toSet()
+}
 
 val scheduleList = listOf(
     Schedule(
         eventName = "맥주 축제",
-        description = "대구 치맥 페스티벌 대구 친구들이랑 가기로함.",
-        date = LocalDate.of(2024,12,20),
-        startTime = LocalTime.of(17,30),
-        endTime = LocalTime.of(22,30),
+        description = "대구 치맥 페스티벌",
+        startDateTime = LocalDateTime.of(2024,12,20, 9,30),
+        endDateTime = LocalDateTime.of(2024,12,22,17,30),
         category = "festival"
     ),
     Schedule(
         eventName = "헬스",
         description = "가슴, 등 1시간 30분하기",
-        date = LocalDate.of(2024,12,19),
-        startTime = LocalTime.of(17,30),
-        endTime = LocalTime.of(19,30),
+        startDateTime = LocalDateTime.of(2024,12,19,17,30),
+        endDateTime = LocalDateTime.of(2024,12,19,19,30),
         category = "work out"
     ),
     Schedule(
         eventName = "SQLD 시험",
         description = "SQLD 시험",
-        date = LocalDate.of(2024,12,19),
-        startTime = LocalTime.of(9,30),
-        endTime = LocalTime.of(12,0),
+        startDateTime = LocalDateTime.of(2024,12,19,9,30),
+        endDateTime = LocalDateTime.of(2024,12,30,12,0),
         category = "study"
     )
 )
