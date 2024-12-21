@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
@@ -38,7 +39,7 @@ import com.naljjig.core.designsystem.NaljjigTheme
 import com.naljjig.presentation.home.data.Schedule
 import com.naljjig.presentation.home.data.scheduleList
 import java.time.LocalDate
-import java.time.LocalTime
+import java.time.LocalDateTime
 
 @Composable
 fun HomeCalendar(){
@@ -95,8 +96,11 @@ fun HomeCalendar(){
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(7),
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+            userScrollEnabled = false
         ) {
             items(firstDayOfWeek) {
                 Box(modifier = Modifier.padding(vertical = 5.dp))
@@ -127,7 +131,7 @@ fun HomeCalendar(){
                         ,
                         horizontalArrangement = Arrangement.Center
                     ) {
-                        scheduleList.filter { it.date == date }.forEachIndexed {index, schedule ->
+                        scheduleList.filter { it.dateSet.contains(date) }.forEachIndexed {index, schedule ->
                             if(index != 0) Spacer(modifier = Modifier.width(4.dp))
                             Box(
                                 modifier = Modifier
@@ -147,7 +151,7 @@ fun HomeCalendar(){
 
         Spacer(modifier = Modifier.height(36.dp))
 
-        scheduleList.filter { it.date == selectedDate.value }.forEachIndexed { index, schedule ->
+        scheduleList.filter { it.dateSet.contains(selectedDate.value) }.forEachIndexed { index, schedule ->
             if(index != 0) Spacer(modifier = Modifier.height(16.dp))
             ScheduleListItem(schedule)
         }
@@ -190,10 +194,7 @@ fun ScheduleListItem(
             Spacer(modifier = Modifier.width(14.dp))
 
             Text(
-                text = schedule.startTime.hour.toString().padStart(2,'0')
-                        + ":" + schedule.startTime.minute.toString().padStart(2,'0')
-                        + "~" + schedule.endTime.hour.toString().padStart(2,'0')
-                        + ":" + schedule.endTime.minute.toString().padStart(2,'0'),
+                text = dateToString(schedule.startDateTime) + " ~ " + dateToString(schedule.endDateTime),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Normal,
                 color = NaljjigTheme.colors.deactivated
@@ -222,10 +223,9 @@ fun ScheduleListItemPreview(){
     ScheduleListItem(
         schedule = Schedule(
             eventName = "맥주 축제",
-            description = "대구 치맥 페스티벌 대구 친구들이랑 가기로함.",
-            date = LocalDate.of(2024,12,20),
-            startTime = LocalTime.of(17,30),
-            endTime = LocalTime.of(22,30),
+            description = "대구 치맥 페스티벌",
+            startDateTime = LocalDateTime.of(2024,12,20, 2017,30),
+            endDateTime = LocalDateTime.of(2024,12,22,17,30),
             category = "festival"
         )
     )
@@ -237,4 +237,12 @@ fun HomeCalendarPreview(){
     NaljjigTheme {
         HomeCalendar()
     }
+}
+
+fun dateToString(startDateTime: LocalDateTime): String{
+    return startDateTime.year.toString() + "년" +
+            startDateTime.month.value.toString() + "월" +
+            startDateTime.dayOfMonth.toString() + "일 " +
+            startDateTime.hour.toString().padStart(2,'0') + ":" +
+            startDateTime.minute.toString().padStart(2,'0')
 }
