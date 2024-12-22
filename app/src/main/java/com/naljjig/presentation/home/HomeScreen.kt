@@ -1,6 +1,8 @@
 package com.naljjig.presentation.home
 
+import android.content.Context
 import android.net.Uri
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -29,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,13 +44,20 @@ import com.naljjig.presentation.home.component.HomeCalendar
 @Composable
 fun HomeScreen(){
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
+    var selectedImagePath by remember { mutableStateOf("") }
+    val context = LocalContext.current
+
 
     val albumLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
     ) { uri ->
         selectedImageUri = uri
+        if (uri != null) {
+            selectedImagePath = getPathFromUri(context,uri)
+        }
+        Log.d("zz",selectedImagePath)
     }
-    val isSheetOpen = remember { mutableStateOf(true) }
+    val isSheetOpen = remember { mutableStateOf(false) }
 
     Box {
         LazyColumn(
@@ -102,6 +112,9 @@ fun HomeScreen(){
                         color = NaljjigTheme.colors.activated,
                         shape = RoundedCornerShape(10.dp)
                     )
+                    .clickable {
+                        isSheetOpen.value = !isSheetOpen.value
+                    }
                     .padding(4.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
@@ -124,7 +137,7 @@ fun HomeScreen(){
     AddEventBottomSheet(
         isSheetOpen = isSheetOpen.value,
         onDismissRequest = { isSheetOpen.value = !isSheetOpen.value },
-        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
     )
 }
 
@@ -134,4 +147,14 @@ fun HomeScreenPreview(){
     NaljjigTheme {
         HomeScreen()
     }
+}
+
+// Helper to get file path from URI
+fun getPathFromUri(context: Context, uri: Uri): String {
+    val cursor = context.contentResolver.query(uri, null, null, null, null)
+    return cursor?.let {
+        val columnIndex = it.getColumnIndex("_data")
+        it.moveToFirst()
+        it.getString(columnIndex)
+    } ?: throw IllegalArgumentException("Invalid URI")
 }
