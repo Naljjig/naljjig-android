@@ -37,6 +37,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -68,4 +69,6 @@ dependencies {
     implementation ("com.google.code.gson:gson:2.10.1")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
     implementation ("com.squareup.okhttp3:okhttp:4.12.0")
+
+    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
 }
