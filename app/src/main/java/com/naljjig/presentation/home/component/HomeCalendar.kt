@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
@@ -37,12 +36,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.naljjig.core.designsystem.NaljjigTheme
 import com.naljjig.presentation.home.data.Schedule
-import com.naljjig.presentation.home.data.scheduleList
 import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Composable
-fun HomeCalendar(){
+fun HomeCalendar(
+    scheduleList : List<Schedule>
+){
     val selectedDate = remember { mutableStateOf( LocalDate.now()) }
     val currentMonth = remember { mutableStateOf(selectedDate.value.withDayOfMonth(1))}
     val daysInMonth = currentMonth.value.lengthOfMonth()
@@ -138,7 +138,7 @@ fun HomeCalendar(){
                                     .size(4.dp)
                                     .border(
                                         width = 1.dp,
-                                        color = (if(categoryToColor[schedule.category] ==null) NaljjigTheme.colors.deactivated else categoryToColor[schedule.category])!!,
+                                        color = if(categoryToColor.containsKey(schedule.category)) categoryToColor[schedule.category]!! else NaljjigTheme.colors.deactivated,
                                         shape = CircleShape
                                     )
                                     .align(Alignment.Bottom)
@@ -194,7 +194,8 @@ fun ScheduleListItem(
             Spacer(modifier = Modifier.width(14.dp))
 
             Text(
-                text = dateToString(schedule.startDateTime) + " ~ " + dateToString(schedule.endDateTime),
+                text = if(schedule.endDateTime != null)dateToString(schedule.startDateTime) + " ~ " + dateToString(schedule.endDateTime)
+                else dateToString(schedule.startDateTime),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Normal,
                 color = NaljjigTheme.colors.deactivated
@@ -235,7 +236,31 @@ fun ScheduleListItemPreview(){
 @Preview
 fun HomeCalendarPreview(){
     NaljjigTheme {
-        HomeCalendar()
+        HomeCalendar(
+            listOf(
+                Schedule(
+                    eventName = "맥주 축제",
+                    description = "대구 치맥 페스티벌",
+                    startDateTime = LocalDateTime.of(2024,12,20, 9,30),
+                    endDateTime = LocalDateTime.of(2024,12,22,17,30),
+                    category = "festival"
+                ),
+                Schedule(
+                    eventName = "헬스",
+                    description = "가슴, 등 1시간 30분하기",
+                    startDateTime = LocalDateTime.of(2024,12,19,17,30),
+                    endDateTime = LocalDateTime.of(2024,12,19,19,30),
+                    category = "work out"
+                ),
+                Schedule(
+                    eventName = "SQLD 시험",
+                    description = "SQLD 시험",
+                    startDateTime = LocalDateTime.of(2024,12,19,9,30),
+                    endDateTime = LocalDateTime.of(2024,12,30,12,0),
+                    category = "study"
+                )
+            )
+        )
     }
 }
 
